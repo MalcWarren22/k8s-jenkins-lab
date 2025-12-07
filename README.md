@@ -28,5 +28,5 @@ This project demonstrates a complete local CI/CD pipeline using:
 
 ## Status
 - Local CI/CD pipeline working
-- Jenkins -> Kubernetes integration complete
+- Jenkins --> Kubernetes integration complete
 
