@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Docker
+*.log
+
+# Kubernetes secrets / kubeconfigs
+jenkins-kubeconfig.yaml
+
+# OS noise
+.DS_Store
+Thumbs.db
