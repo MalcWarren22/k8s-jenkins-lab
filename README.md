@@ -2,7 +2,7 @@
 
 A **production-style CI/CD pipeline** that builds, deploys, and safely rolls out an application to Kubernetes using **Jenkins, Docker, and k3d (k3s)** — all running locally on **WSL2**.
 
-This lab was intentionally designed to go **beyond “it works”** and instead focus on **real DevOps engineering practices**: secure configuration, rollout safety, failure handling, and operational debugging.
+This lab was intentionally designed to go **beyond "just setting it up”** and instead focus on **real DevOps engineering practices**: secure configuration, rollout safety, failure handling, and operational debugging.
 
 ---
 
@@ -49,7 +49,7 @@ This reflects **real production challenges and fixes**, not a “happy-path” d
 
 ---
 
-## 🏗️ CI/CD Pipeline Flow
+## CI/CD Pipeline Flow
 
 1. **Source Checkout**
    - Jenkins pulls the latest code from GitHub
