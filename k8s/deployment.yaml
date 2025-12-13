@@ -2,8 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: devops-lab-app
+  labels:
+    app: devops-lab-app
 spec:
-  replicas: 1
+  replicas: 2
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   selector:
     matchLabels:
       app: devops-lab-app
@@ -12,9 +20,54 @@ spec:
       labels:
         app: devops-lab-app
     spec:
+      terminationGracePeriodSeconds: 30
       containers:
         - name: devops-lab-app
           image: devops-lab-app:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8000
+            - name: http
+              containerPort: 8000
+
+          # Prevent liveness from killing the pod during slow boot
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            failureThreshold: 30   # ~30 * 2s = 60s startup window
+            periodSeconds: 2
+            timeoutSeconds: 2
+
+          # Only send traffic when ready
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          # Restart if unhealthy (after startupProbe passes)
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          # Give service time to stop routing traffic before shutdown
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"

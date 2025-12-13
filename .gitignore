@@ -1,14 +1,29 @@
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
+
 # Python
 __pycache__/
 *.pyc
-venv/
+*.pyo
+*.pyd
+.env
 
 # Docker
 *.log
+docker-compose.override.yml
 
-# Kubernetes secrets / kubeconfigs
+# Kubernetes
 jenkins-kubeconfig.yaml
+kubeconfig
+*.kubeconfig
 
-# OS noise
-.DS_Store
+# Jenkins
+jenkins_home/
+secrets/
+credentials.xml
+
+# WSL / Windows
+*.swp
 Thumbs.db

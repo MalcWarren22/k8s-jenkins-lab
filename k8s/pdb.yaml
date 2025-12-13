@@ -1,0 +1,11 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: devops-lab-app-pdb
+  labels:
+    app: devops-lab-app
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: devops-lab-app
